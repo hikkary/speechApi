@@ -2,6 +2,7 @@
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
+import synthesis from './module/synthesis';
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,6 +15,13 @@ const corsOptions = {
 };
 
 app.post('/allo', cors(corsOptions), (req,res) => {
+	let path = synthesis(req.body.text, req.body.lang,req.headers.host, (err) => {
+		if (err) {
+
+			console.log('error pico');
+		}
+	});
+	console.log(path);
 	res.send('test');
 });
 
