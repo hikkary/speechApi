@@ -21,8 +21,8 @@ const synthesis = (text, lang, host, cb) => {
 			console.log('ace');
 			// fs.unlink(file)
 		})
-		return (host + '/api/picotts/tmp/' + file)
-		
+		 return ("http://" + host.split(":")[0] + '/api/picotts/' + file)
+
 	}
 
 export default synthesis;

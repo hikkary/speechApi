@@ -1,3 +1,4 @@
+
 /* jshint esversion: 6 */
 import cors from 'cors';
 import express from 'express';
@@ -22,7 +23,7 @@ app.post('/allo', cors(corsOptions), (req,res) => {
 		}
 	});
 	console.log(path);
-	res.send('test');
+	res.send(path);
 });
 
 app.get('/',(req, res) => {
