@@ -11,17 +11,29 @@ function getTmpFile() {
 	return (!fs.existsSync(path)) ? path : getTmpFile()
 }
 
-const synthesis = (text, lang, host, cb) => {
-		let file = getTmpFile()
+const synthesis = async (text, lang, host, cb) => {
+		let file =  getTmpFile()
 		let command = commandTmpl.replace('{{lang}}', lang).replace('{{text}}', text).replace('{{file}}', file)
-		console.log(file);
-		console.log(host);
-		exec.exec(command, function(err) {
-			cb && cb(err)
-			console.log('ace');
+		console.log("1 "+file);
+		console.log("2 "+host);
+		await exec.exec(command, function(err) {
+			if (err) cb(err)
+			else {
+				cb(null, "http://" + host.split(":")[0] + '/api/picotts/' + file)
+			}
+			// console.log('ace');
+
 			// fs.unlink(file)
 		})
-		 return ("http://" + host.split(":")[0] + '/api/picotts/' + file)
+
+
+		// console.log("3 "+fs.existsSync(file));
+		// while(!fs.existsSync(file)){
+		// 	console.log(fs.existsSync(file));
+		// }
+		// console.log(fs.existsSync(file));
+
+
 
 	}
 

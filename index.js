@@ -1,6 +1,7 @@
 
 /* jshint esversion: 6 */
 import cors from 'cors';
+import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import synthesis from './module/synthesis';
@@ -15,15 +16,22 @@ const corsOptions = {
 	optionsSuccessStatus: 200,
 };
 
-app.post('/allo', cors(corsOptions), (req,res) => {
-	let path = synthesis(req.body.text, req.body.lang,req.headers.host, (err) => {
+app.post('/allo', cors(corsOptions), async (req,res) => {
+	let path = await synthesis(req.body.text, req.body.lang,req.headers.host, (err, fileLink) => {
 		if (err) {
-
 			console.log('error pico');
+		} else {
+			res.send(fileLink)
 		}
 	});
-	console.log(path);
-	res.send(path);
+
+	// console.log("4 "+fs.existsSync(path));
+	// while(!fs.existsSync(path)){
+		// fs.existsSync(path);
+		// console.log('haha');
+	// }
+	// console.log(path);
+	// res.send(path);
 });
 
 app.get('/',(req, res) => {
